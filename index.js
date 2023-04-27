@@ -8,7 +8,18 @@ for (i = 0; i < numOfDrumButtons; i++) {
     // sound.play();
 
     var buttonHTML = this.innerHTML;
-    switch (buttonHTML) {
+    makeSound(buttonHTML);
+    buttonAnimation(buttonHTML);
+  });
+
+  //detecting keyboard pressed
+  document.addEventListener("keydown", function (event) {
+    makeSound(event.key);
+    buttonAnimation(event.key);
+  });
+
+  function makeSound(key) {
+    switch (key) {
       case "w":
         var crash = new Audio("sounds/crash.mp3");
         crash.play();
@@ -40,5 +51,13 @@ for (i = 0; i < numOfDrumButtons; i++) {
       default:
         console.log(buttonHTML);
     }
-  });
+  }
+
+  function buttonAnimation(currentKey) {
+    var activeButton = document.querySelector("." + currentKey);
+    activeButton.classList.add("pressed");
+    setTimeout(function () {
+      activeButton.classList.remove("pressed");
+    }, 100);
+  }
 }
